@@ -8,43 +8,43 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     foreach ($_POST as $field => $value) {
         $value = trim($value);
 
-        switch ($field) {
-            case "name":
-                if ($value == "") {
-                    $errors[$field] = "Name is required";
-                } elseif (preg_match("/[0-9]/", $value)) {
-                    $errors[$field] = "Name cannot contain numbers";
-                }
-                break;
+        // Name validation
+        if ($field == "name") {
+            if ($value == "") {
+                $errors[$field] = "Name is required";
+            } elseif (preg_match("/[0-9]/", $value)) {
+                $errors[$field] = "Name cannot contain numbers";
+            }
 
-            case "email":
-                if ($value == "") {
-                    $errors[$field] = "Email is required";
-                } elseif (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
-                    $errors[$field] = "Invalid email format";
-                }
-                break;
+        // Email validation
+        } elseif ($field == "email") {
+            if ($value == "") {
+                $errors[$field] = "Email is required";
+            } elseif (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
+                $errors[$field] = "Invalid email format";
+            }
 
-            case "password":
-                if ($value == "") {
-                    $errors[$field] = "Password is required";
-                } elseif (strlen($value) < 6) {
-                    $errors[$field] = "Password must be at least 6 characters";
-                }
-                break;
+        // Password validation
+        } elseif ($field == "password") {
+            if ($value == "") {
+                $errors[$field] = "Password is required";
+            } elseif (strlen($value) < 6) {
+                $errors[$field] = "Password must be at least 6 characters";
+            }
 
-            case "mobile":
-                if ($value == "") {
-                    $errors[$field] = "Mobile number is required";
-                } elseif (!preg_match("/^[0-9]{10}$/", $value)) {
-                    $errors[$field] = "Enter a valid 10-digit mobile number";
-                }
-                break;
+        // Mobile validation
+        } elseif ($field == "mobile") {
+            if ($value == "") {
+                $errors[$field] = "Mobile number is required";
+            } elseif (!preg_match("/^[0-9]{10}$/", $value)) {
+                $errors[$field] = "Enter a valid 10-digit mobile number";
+            }
 
-            default:
-                if ($value == "") {
-                    $errors[$field] = ucfirst($field) . " is required";
-                }
+        // Default validation for other fields
+        } else {
+            if ($value == "") {
+                $errors[$field] = ucfirst($field) . " is required";
+            }
         }
     }
 
